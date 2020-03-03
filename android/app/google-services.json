@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "825481365743",
+    "firebase_url": "https://profranco-c60f8.firebaseio.com",
+    "project_id": "profranco-c60f8",
+    "storage_bucket": "profranco-c60f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825481365743:android:0fd4c3e09ae54b1cfe331a",
+        "android_client_info": {
+          "package_name": "com.blanq.profranco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825481365743-2astrh67kfa7r5p7n8phiq2b0suj5739.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD05F2W_CFo7af5BNuZAy0P7VYt2Ob-0YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825481365743-2astrh67kfa7r5p7n8phiq2b0suj5739.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825481365743:android:ef3a5e672315b3c0fe331a",
+        "android_client_info": {
+          "package_name": "com.proxima.iconfarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825481365743-2astrh67kfa7r5p7n8phiq2b0suj5739.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD05F2W_CFo7af5BNuZAy0P7VYt2Ob-0YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825481365743-2astrh67kfa7r5p7n8phiq2b0suj5739.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
