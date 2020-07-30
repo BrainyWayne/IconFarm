@@ -9,15 +9,19 @@ class ViewUser extends StatefulWidget {
   String rating;
   String username;
   String email;
-  String photoUrl;
   String residence;
   String number;
   String occupation;
+  String title;
+  String details;
+  String type;
 
   ViewUser(
       {@required this.username,
+      @required this.title,
+      @required this.details,
       @required this.email,
-      @required this.photoUrl,
+      @required this.type,
       @required this.residence,
       @required this.number});
 
@@ -38,21 +42,10 @@ class _ViewUserState extends State<ViewUser> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-                child: Container(
-                  height: 100.0,
-                  width: 100.0,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.0),
-                      image: DecorationImage(
-                          image: CachedNetworkImageProvider(widget.photoUrl),
-                          fit: BoxFit.cover)),
-                ),
-              ),
+             
               Padding(
                 padding:
-                    const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+                    const EdgeInsets.only(left: 20.0, right: 20.0, top: 40.0),
                 child: Text(
                   widget.username,
                   style: TextStyle(
@@ -68,6 +61,7 @@ class _ViewUserState extends State<ViewUser> {
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       color: Colors.grey,
+                      fontWeight: FontWeight.bold,
                       fontSize: 15.0),
                 ),
               ),
@@ -75,7 +69,18 @@ class _ViewUserState extends State<ViewUser> {
                 padding:
                     const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
                 child: Text(
-                  'Hello, I am Carson. I love making cool photos, beautiful architecture and icecream.',
+                  widget.title,
+                  style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 19.0),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+                child: Text(
+                  widget.details,
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w300,
@@ -196,7 +201,7 @@ class _ViewUserState extends State<ViewUser> {
                       ),
                       child: Center(
                           child: Text(
-                        'FOLLOW',
+                        'CONTACT',
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Montserrat',

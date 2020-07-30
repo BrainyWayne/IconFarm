@@ -3,6 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconfarm/design_course/home_design_course.dart';
+import 'package:iconfarm/pages/newpost.dart';
 import 'package:iconfarm/pages/profilePage.dart';
 import 'package:iconfarm/pages/settings.dart';
 
@@ -39,7 +40,7 @@ class _HomePageViewState extends State<HomePageView> {
         },
         items: <Widget>[
           InkWell(child: Icon(Icons.home, size: 27),),
-          Icon(Icons.favorite,size: 27),
+          Icon(Icons.add,size: 27),
           Icon(Icons.notifications, size: 27),
           Icon(Icons.account_circle, size: 27),
         ],
@@ -48,7 +49,7 @@ class _HomePageViewState extends State<HomePageView> {
         controller: _controller,
         children: <Widget>[
           DesignCourseHomeScreen(),
-          Notifications(),
+          NewPost(),
           Notifications(),
           UserProfile(),
         ],

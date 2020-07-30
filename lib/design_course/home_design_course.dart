@@ -1,11 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
+import 'package:iconfarm/utils/crudobj.dart';
 import 'package:iconfarm/design_course/popular_course_list_view.dart';
-import 'package:iconfarm/pages/profilePage.dart';
 import 'package:iconfarm/pages/viewuser.dart';
 import 'package:iconfarm/services/CRUD.dart';
 import 'package:iconfarm/src/helper/quad_clipper.dart';
@@ -16,7 +13,7 @@ import 'course_info_screen.dart';
 import 'design_course_app_theme.dart';
 
 class DesignCourseHomeScreen extends StatefulWidget {
-  String photoUrl;
+  final String photoUrl;
 
   DesignCourseHomeScreen({@required this.photoUrl});
 
@@ -26,13 +23,15 @@ class DesignCourseHomeScreen extends StatefulWidget {
 
 double width;
 crudMedthods crudObj = new crudMedthods();
+CRUDMethods methods = new CRUDMethods();
 
 class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   CategoryType categoryType = CategoryType.ui;
   String name;
   String level;
   String rating;
-  QuerySnapshot cars;
+  QuerySnapshot qs;
+  QuerySnapshot postmethods;
   String username;
   String email;
   String photoUrl = "";
@@ -45,7 +44,13 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   void initState() {
     crudObj.getHomeData().then((results) {
       setState(() {
-        cars = results;
+        qs = results;
+      });
+    });
+
+    methods.getData().then((results) {
+      setState(() {
+        postmethods = results;
       });
     });
 
@@ -75,16 +80,19 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                     fit: BoxFit.cover,
                     color: Colors.grey.withOpacity(0.15),
                   )),
-              Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 20,
-                  ),
-                  getAppBarUI(),
-                  Container(
-                      height: MediaQuery.of(context).size.height,
-                      child: _carList()),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    ),
+                    getAppBarUI(),
+                    Container(
+                        height: MediaQuery.of(context).size.height,
+                        child: _postList()),
+                  ],
+                ),
               ),
             ],
           )),
@@ -113,7 +121,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Popular Course',
+            'Popular Products',
             textAlign: TextAlign.left,
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -146,11 +154,11 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   Widget getButtonUI(CategoryType categoryTypeData, bool isSelected) {
     String txt = '';
     if (CategoryType.ui == categoryTypeData) {
-      txt = 'Beginner';
+      txt = 'New Farmer';
     } else if (CategoryType.coding == categoryTypeData) {
-      txt = 'Intermediate';
+      txt = 'Intermediate Farmer';
     } else if (CategoryType.basic == categoryTypeData) {
-      txt = 'Advanced';
+      txt = 'Advanced Farmer';
     }
     return Expanded(
       child: Container(
@@ -389,8 +397,8 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
         });
   }
 
-  Widget _carList() {
-    if (cars != null) {
+  Widget _postList() {
+    if (qs != null) {
       return ListView(
         children: <Widget>[
           Container(
@@ -403,7 +411,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Featured",
+                        "Featured Products",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w500),
                       ),
@@ -438,15 +446,19 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) => ViewUser(
-                                          username:
-                                              cars.documents[0].data['name'],
-                                          email:
-                                              cars.documents[0].data['email'],
-                                          photoUrl:
-                                              cars.documents[0].data['photo'],
-                                          number:
-                                              cars.documents[0].data['phone'],
-                                          residence: cars
+                                          username: postmethods
+                                              .documents[0].data['name'],
+                                          email: postmethods
+                                              .documents[0].data['email'],
+                                          title: postmethods
+                                              .documents[0].data['title'],
+                                          details: postmethods
+                                              .documents[0].data['details'],
+                                          type: postmethods
+                                              .documents[0].data['type'],
+                                          number: postmethods
+                                              .documents[0].data['number'],
+                                          residence: postmethods
                                               .documents[0].data['residence'],
                                         )));
                           },
@@ -456,10 +468,10 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                                 _decorationContainerA(Colors.green, 50, -30),
                             chipColor: Colors.white,
                             chipText1:
-                                cars.documents[0].data['name'] + "         ",
-                            chipText2: "8 Courses",
+                                qs.documents[0].data['name'] + "         ",
+                            chipText2: "8 products",
                             isPrimaryCard: true,
-                            imgPath: cars.documents[0].data['photo'],
+                            imgPath: qs.documents[0].data['photo'],
                           ),
                         ),
                         InkWell(
@@ -469,15 +481,11 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                                 MaterialPageRoute(
                                     builder: (BuildContext context) => ViewUser(
                                           username:
-                                              cars.documents[2].data['name'],
-                                          email:
-                                              cars.documents[2].data['email'],
-                                          photoUrl:
-                                              cars.documents[2].data['photo'],
-                                          number:
-                                              cars.documents[2].data['phone'],
-                                          residence: cars
-                                              .documents[2].data['residence'],
+                                              qs.documents[2].data['name'],
+                                          email: qs.documents[2].data['email'],
+                                          number: qs.documents[2].data['phone'],
+                                          residence:
+                                              qs.documents[2].data['residence'],
                                         )));
                           },
                           child: _card(
@@ -486,8 +494,8 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                               backWidget:
                                   _decorationContainerB(Colors.white, 90, -40),
                               chipText1:
-                                  cars.documents[2].data['name'] + "         ",
-                              chipText2: "9 Courses",
+                                  qs.documents[2].data['name'] + "         ",
+                              chipText2: "9 products",
                               imgPath:
                                   "https://hips.hearstapps.com/esquireuk.cdnds.net/16/39/980x980/square-1475143834-david-gandy.jpg?resize=480:*"),
                         ),
@@ -498,15 +506,11 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                                 MaterialPageRoute(
                                     builder: (BuildContext context) => ViewUser(
                                           username:
-                                              cars.documents[3].data['name'],
-                                          email:
-                                              cars.documents[3].data['email'],
-                                          photoUrl:
-                                              cars.documents[3].data['photo'],
-                                          number:
-                                              cars.documents[3].data['phone'],
-                                          residence: cars
-                                              .documents[3].data['residence'],
+                                              qs.documents[3].data['name'],
+                                          email: qs.documents[3].data['email'],
+                                          number: qs.documents[3].data['phone'],
+                                          residence:
+                                              qs.documents[3].data['residence'],
                                         )));
                           },
                           child: _card(
@@ -515,10 +519,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                               backWidget:
                                   _decorationContainerC(Colors.white, 50, -30),
                               chipText1:
-                                  cars.documents[3].data['name'] + "         ",
-                              chipText2: "8 Courses",
-                              imgPath:
-                                  cars.documents[3].data['photo']),
+                                  qs.documents[3].data['name'] + "         ",
+                              chipText2: "8 products",
+                              imgPath: qs.documents[3].data['photo']),
                         ),
                         InkWell(
                           onTap: () {
@@ -527,15 +530,11 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                                 MaterialPageRoute(
                                     builder: (BuildContext context) => ViewUser(
                                           username:
-                                              cars.documents[4].data['name'],
-                                          email:
-                                              cars.documents[4].data['email'],
-                                          photoUrl:
-                                              cars.documents[4].data['photo'],
-                                          number:
-                                              cars.documents[4].data['phone'],
-                                          residence: cars
-                                              .documents[2].data['residence'],
+                                              qs.documents[4].data['name'],
+                                          email: qs.documents[4].data['email'],
+                                          number: qs.documents[4].data['phone'],
+                                          residence:
+                                              qs.documents[2].data['residence'],
                                         )));
                           },
                           child: _card(
@@ -546,8 +545,8 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                                   secondary: LightColor.lightseeBlue,
                                   secondaryAccent: LightColor.darkseeBlue),
                               chipText1:
-                                  cars.documents[4].data['name'] + "         ",
-                              chipText2: "8 Courses",
+                                  qs.documents[4].data['name'] + "         ",
+                              chipText2: "8 products",
                               imgPath:
                                   "https://d1mo3tzxttab3n.cloudfront.net/static/img/shop/560x580/vint0080.jpg"),
                         ),
@@ -562,7 +561,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Courses",
+                        "Available Products",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w500),
                       ),
@@ -596,7 +595,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             ),
           ),
           ListView.builder(
-            itemCount: cars.documents.length,
+            itemCount: postmethods.documents.length,
             padding: EdgeInsets.all(0),
             shrinkWrap: true,
             physics: ScrollPhysics(),
@@ -607,27 +606,66 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) => ViewUser(
-                                username: cars.documents[i].data['name'],
-                                email: cars.documents[i].data['email'],
-                                photoUrl: cars.documents[i].data['photo'],
-                                number: cars.documents[i].data['phone'],
-                                residence: cars.documents[i].data['residence'],
+                                username: postmethods.documents[i].data['name'],
+                                title: postmethods.documents[i].data['title'],
+                                email: postmethods.documents[i].data['emmail'],
+                                details:
+                                    postmethods.documents[i].data['details'],
+                                type: postmethods.documents[i].data['type'],
+                                number: postmethods.documents[i].data['number'],
+                                residence:
+                                    postmethods.documents[i].data['residence'],
                               )));
                 },
                 child: new Container(
                   margin: EdgeInsets.only(left: 15, right: 15, bottom: 10),
                   decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.85),
+                      color: Colors.grey.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(15)),
                   child: ListTile(
-                    title: Text(cars.documents[i].data['name']),
-                    subtitle: Text(cars.documents[i].data['email']),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          postmethods.documents[i].data['name'],
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          postmethods.documents[i].data['title'],
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.black),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          postmethods.documents[i].data['details'],
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
               // return new ListTile(
-              //   title: Text(cars.documents[i].data['carName']),
-              //   subtitle: Text(cars.documents[i].data['color']),
+              //   title: Text(qs.documents[i].data['carName']),
+              //   subtitle: Text(qs.documents[i].data['color']),
               // );
             },
           ),
@@ -891,7 +929,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-  Widget _cardInfo(String title, String courses, Color textColor, Color primary,
+  Widget _cardInfo(String title, String products, Color textColor, Color primary,
       {bool isPrimaryCard = false}) {
     return Align(
       alignment: Alignment.bottomLeft,
@@ -911,7 +949,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             ),
           ),
           SizedBox(height: 5),
-          _chip(courses, primary, height: 5, isPrimaryCard: isPrimaryCard)
+          _chip(products, primary, height: 5, isPrimaryCard: isPrimaryCard)
         ],
       ),
     );

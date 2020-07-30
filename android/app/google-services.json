@@ -30,6 +30,14 @@
             {
               "client_id": "825481365743-2astrh67kfa7r5p7n8phiq2b0suj5739.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "825481365743-dirn0qu8hlc00hdm6rv3hhoere6qeds9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.blanqcheq.profranco",
+                "app_store_id": "1500190835"
+              }
             }
           ]
         }
@@ -38,6 +46,43 @@
     {
       "client_info": {
         "mobilesdk_app_id": "1:825481365743:android:ef3a5e672315b3c0fe331a",
+        "android_client_info": {
+          "package_name": "com.blanqcheq.profranco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825481365743-2astrh67kfa7r5p7n8phiq2b0suj5739.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD05F2W_CFo7af5BNuZAy0P7VYt2Ob-0YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825481365743-2astrh67kfa7r5p7n8phiq2b0suj5739.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "825481365743-dirn0qu8hlc00hdm6rv3hhoere6qeds9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.blanqcheq.profranco",
+                "app_store_id": "1500190835"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825481365743:android:da82ef9237ac857cfe331a",
         "android_client_info": {
           "package_name": "com.proxima.iconfarm"
         }
@@ -59,6 +104,14 @@
             {
               "client_id": "825481365743-2astrh67kfa7r5p7n8phiq2b0suj5739.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "825481365743-dirn0qu8hlc00hdm6rv3hhoere6qeds9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.blanqcheq.profranco",
+                "app_store_id": "1500190835"
+              }
             }
           ]
         }
